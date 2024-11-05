@@ -1,3 +1,3 @@
-import {IEntry} from "./IContract";
+import {IContract} from "./IContract";
 
-export type EntryKey = keyof IEntry;
+export type EntryKey = keyof IContract;

@@ -1,4 +1,4 @@
-export interface IEntry {
+export interface IContract {
     /** Número da instituição financeira */
     nrInst: string;
 
