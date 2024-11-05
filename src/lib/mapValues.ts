@@ -1,4 +1,4 @@
-import {IEntry} from "../Interfaces/IContract";
+import {IContract} from "../Interfaces/IContract";
 import {concatMap, from, map, reduce} from "rxjs";
 import {EntryKey} from "../Interfaces/EntryKey";
 
