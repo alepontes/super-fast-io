@@ -101,11 +101,8 @@ const cnpj = (stg: string) => {
     return n1 === r1 && n2 === r2;
 }
 
-/**
- * Valida um documento (CPF ou CNPJ)
- * @param keys
- */
-export const validateDocument = (keys: Array<EntryKey>) => mapValues(keys, (value: string) => {
+
+export const validateDocumentFn = (value: string): boolean => {
     const doc = value?.replace(/\D/g, '').trim();
 
     if (doc.length === 11) {
@@ -117,5 +114,11 @@ export const validateDocument = (keys: Array<EntryKey>) => mapValues(keys, (valu
     }
 
     return false;
-});
+}
+
+/**
+ * Valida um documento (CPF ou CNPJ)
+ * @param keys
+ */
+export const validateDocument = (keys: Array<EntryKey>) => mapValues(keys, validateDocumentFn);
 

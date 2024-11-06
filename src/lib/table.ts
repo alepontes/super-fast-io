@@ -12,9 +12,9 @@ export const table = () => tap((contracts: Array<IContract>) => {
     const contract: IContract = contracts[0];
 
     // recupera quantidade de prestações
-    const qtPrestacoes = +contract.qtPrestacoes;
+    const qtPrestacoes = +contract?.qtPrestacoes;
 
-    const vlTotal = stringToFloat(contract.vlTotal);
+    const vlTotal = stringToFloat(contract?.vlTotal);
 
     const vlPresta = stringToBRLFn(contract.vlPresta);
 

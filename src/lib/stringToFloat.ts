@@ -5,6 +5,7 @@
  */
 export const stringToFloat = (stg: string) => {
     const value = stg
+        .trim()
         .replace(/\./g, '')
         .replace(',', '.');
 

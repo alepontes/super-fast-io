@@ -28,7 +28,7 @@ fromEvent($readFile, 'data')
     // roda todos os itens(agrupados por número de contrato) simultaneamente
     mergeMap(group$ => group$.pipe(
         // valida CNPJ
-        // validateDocument(['nrCpfCnpj']),
+        // filter((contract: IContract) => validateDocumentFn(contract.nrCpfCnpj)),
 
         toArray(),
 
