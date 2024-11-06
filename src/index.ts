@@ -1,17 +1,22 @@
-import {fromEvent, groupBy, mergeMap, takeUntil, toArray} from "rxjs";
+import {from, fromEvent, groupBy, mergeMap, takeUntil, toArray} from "rxjs";
 import {createReadStream} from "fs";
 import csvParser from "csv-parser";
+import {writeFile} from "./lib/writeFile";
+import {table} from "./lib/table";
 import {stringToBRL} from "./lib/stringToBRL";
 import {debug} from "./lib/debug";
-import {writeFile} from "./lib/writeFile";
+import path from "node:path";
 
-// const input = `/home/ale/Archive/Develop/super-fast-io/playground/data.csv`;
-const input = `/home/ale/Archive/Develop/super-fast-io/data.csv`;
-const output = `/home/ale/Archive/Develop/super-fast-io/playground/data-output.json`;
-// const output = `/home/ale/Archive/Develop/super-fast-io/data.csv`;
+// recupera o path do arquivo de entrada
+const inputFilePath = path.resolve(__dirname, '../../data.csv');
 
-const $readFile = createReadStream(input).pipe(csvParser());
+// define arquivo de saida em formato JSON
+const outputFilePath = path.resolve(__dirname, '../../data-output.json');
 
+// cria stream de leitura do arquivo
+const $readFile = createReadStream(inputFilePath).pipe(csvParser());
+
+// inicia um stream a partir do evento `data`
 fromEvent($readFile, 'data')
     .pipe(
         // finaliza observable ao finalizar leitura do arquivo
@@ -22,28 +27,33 @@ fromEvent($readFile, 'data')
 
     // roda todos os itens(agrupados por número de contrato) simultaneamente
     mergeMap(group$ => group$.pipe(
-
         // valida CNPJ
-        // validateCNPJ(['nrCpfCnpj']),
-
-        // converte os campos para BRL
-        stringToBRL([
-            "vlTotal",
-            "vlPresta",
-            "vlMora",
-            "vlMulta",
-            "vlOutAcr",
-            "vlIof",
-            "vlDescon",
-            "vlAtual"
-        ]),
+        // validateDocument(['nrCpfCnpj']),
 
         toArray(),
+
+        // imprime o resumo do contrato (não altera a stream)
+        table(),
+
+        // ajustar os valores simultaneamente para todos os registros ao mesmo tempo
+        mergeMap((message: any) => from(message).pipe(
+            // transforma os dados correspondentes as chaves do array de string no formato BRL
+            stringToBRL([
+                "vlTotal",
+                "vlPresta",
+                "vlMora",
+                "vlMulta",
+                "vlOutAcr",
+                "vlIof",
+                "vlDescon",
+                "vlAtual"
+            ]),
+        ))
     )),
     toArray(),
 
-    // escreve resultado em um arquivo
-    writeFile(output),
+    debug((message: any) => `${message.length} parcelas processadas a partir do arquivo ${inputFilePath}`),
 
-    debug(),
+    // escreve resultado em um arquivo
+    writeFile(outputFilePath),
 ).subscribe();
