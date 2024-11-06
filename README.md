@@ -13,3 +13,5 @@ Usando RxJS para máxima performace processando arquivos e dados paralelamente e
 ## Resultados
 - Log do resumo de cada contrato ao executar 
 - Um arquivo formatado é gerado na raiz `data-output.json`.
+
+> Descomentar a validação de CPF/CNPJ em src/index.ts:33 reprova quase todas os contratos

@@ -11,6 +11,11 @@ export const table = () => tap((contracts: Array<IContract>) => {
 
     const contract: IContract = contracts[0];
 
+    // remove contratos vazios
+    if (!contracts.length || !contract) {
+        return
+    }
+
     // recupera quantidade de prestações
     const qtPrestacoes = +contract?.qtPrestacoes;
 
