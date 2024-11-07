@@ -8,6 +8,8 @@ Usando RxJS para máxima performace processando arquivos e dados paralelamente e
 ## Instruções de execução
 - `git clone https://github.com/alepontes/super-fast-io.git`
 - `cd super-fast-io`
+- `npm i -f`
+- `npm i -g tsc`
 - `npm start`
 
 ## Resultados
