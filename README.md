@@ -1,5 +1,4 @@
 # IO de validação dados a paritr de um arquivo em disco 
-Resolução do [CHALLENGE](./CHALLENGE.md).
 I/O de validação dados a partir de um arquivo em disco
 
 ## RxJS para máxima performace 
